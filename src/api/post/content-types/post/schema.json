@@ -4,7 +4,8 @@
   "info": {
     "singularName": "post",
     "pluralName": "posts",
-    "displayName": "Posts"
+    "displayName": "Posts",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -19,17 +20,33 @@
       "type": "string"
     },
     "Uploadpost": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "Description": {
       "type": "string",
+      "required": true
+    },
+    "post": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::comentario.comentario",
+      "mappedBy": "comentarios"
+    },
+    "Categoria": {
+      "type": "enumeration",
+      "enum": [
+        "Informativo",
+        "Notícia",
+        "Relato"
+      ],
       "required": true
     }
   }

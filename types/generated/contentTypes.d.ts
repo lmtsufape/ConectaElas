@@ -1,11 +1,47 @@
 import type { Struct, Schema } from '@strapi/strapi';
 
+export interface ApiComentarioComentario extends Struct.CollectionTypeSchema {
+  collectionName: 'comentarios';
+  info: {
+    singularName: 'comentario';
+    pluralName: 'comentarios';
+    displayName: 'Comentarios';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    comentario: Schema.Attribute.String & Schema.Attribute.Required;
+    data: Schema.Attribute.DateTime;
+    users_permissions_user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    admin_user: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    comentarios: Schema.Attribute.Relation<'manyToOne', 'api::post.post'>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::comentario.comentario'
+    >;
+  };
+}
+
 export interface ApiPostPost extends Struct.CollectionTypeSchema {
   collectionName: 'posts';
   info: {
     singularName: 'post';
     pluralName: 'posts';
     displayName: 'Posts';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -18,6 +54,11 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
       true
     >;
     Description: Schema.Attribute.String & Schema.Attribute.Required;
+    post: Schema.Attribute.Relation<'oneToMany', 'api::comentario.comentario'>;
+    Categoria: Schema.Attribute.Enumeration<
+      ['Informativo', 'Not\u00EDcia', 'Relato']
+    > &
+      Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -500,6 +541,10 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    comentarios: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::comentario.comentario'
+    >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -880,6 +925,7 @@ export interface AdminTransferTokenPermission
 declare module '@strapi/strapi' {
   export module Public {
     export interface ContentTypeSchemas {
+      'api::comentario.comentario': ApiComentarioComentario;
       'api::post.post': ApiPostPost;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
