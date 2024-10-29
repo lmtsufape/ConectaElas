@@ -34,11 +34,11 @@
       "type": "string",
       "required": true
     },
-    "post": {
+    "comentarios": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::comentario.comentario",
-      "mappedBy": "comentarios"
+      "mappedBy": "post"
     },
     "Categoria": {
       "type": "enumeration",

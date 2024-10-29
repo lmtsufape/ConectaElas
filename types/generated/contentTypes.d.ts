@@ -19,7 +19,7 @@ export interface ApiComentarioComentario extends Struct.CollectionTypeSchema {
       'plugin::users-permissions.user'
     >;
     admin_user: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
-    comentarios: Schema.Attribute.Relation<'manyToOne', 'api::post.post'>;
+    post: Schema.Attribute.Relation<'manyToOne', 'api::post.post'>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -54,7 +54,10 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
       true
     >;
     Description: Schema.Attribute.String & Schema.Attribute.Required;
-    post: Schema.Attribute.Relation<'oneToMany', 'api::comentario.comentario'>;
+    comentarios: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::comentario.comentario'
+    >;
     Categoria: Schema.Attribute.Enumeration<
       ['Informativo', 'Not\u00EDcia', 'Relato']
     > &

@@ -30,11 +30,11 @@
       "relation": "oneToOne",
       "target": "admin::user"
     },
-    "comentarios": {
+    "post": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::post.post",
-      "inversedBy": "post"
+      "inversedBy": "comentarios"
     }
   }
 }
