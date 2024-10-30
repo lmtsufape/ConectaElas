@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  strapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: conectaelas  # Nome da imagem
+    container_name: ConectaElas  # Nome do contêiner
+    environment:
+      - DATABASE_CLIENT=postgres
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=conectaelas
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=root
+      - HOST=0.0.0.0
+      - PORT=1337
+      - JWT_SECRET=ZlpG7CxK5+VLz+ydOoJ8sA==
+    ports:
+      - '1337:1337'
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: conectaelas
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
