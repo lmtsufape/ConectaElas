@@ -1,13 +1,15 @@
 version: '3.8'
 
 services:
-  strapi:
+
+  strapi-prod:
     build:
       context: .
       dockerfile: Dockerfile
-    image: conectaelas  # Nome da imagem
-    container_name: ConectaElas  # Nome do contêiner
+    image: conectaelas
+    container_name: ConectaElas
     environment:
+      - NODE_ENV=production
       - DATABASE_CLIENT=postgres
       - DATABASE_HOST=db
       - DATABASE_PORT=5432
@@ -21,7 +23,9 @@ services:
       - '1337:1337'
     depends_on:
       - db
+    command: npm run start  # Roda em modo de produção
 
+  # Serviço do banco de dados
   db:
     image: postgres:latest
     environment:
