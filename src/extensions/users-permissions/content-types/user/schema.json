@@ -65,11 +65,17 @@
       "inversedBy": "users",
       "configurable": false
     },
+    "mensagems": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::mensagem.mensagem",
+      "mappedBy": "remetente_id"
+    },
     "comentarios": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::comentario.comentario",
-      "mappedBy": "users_permissions_user"
+      "mappedBy": "id_usuario"
     }
   }
 }

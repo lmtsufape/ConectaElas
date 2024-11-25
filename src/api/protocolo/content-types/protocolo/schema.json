@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "protocolos",
+  "info": {
+    "singularName": "protocolo",
+    "pluralName": "protocolos",
+    "displayName": "Protocolos",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Data_Abertura": {
+      "type": "datetime"
+    },
+    "Data_Fechamento": {
+      "type": "datetime"
+    },
+    "Status_Protocolo": {
+      "type": "enumeration",
+      "enum": [
+        "Pendente",
+        "Finalizado"
+      ],
+      "default": "Pendente"
+    },
+    "ProtocoloID": {
+      "type": "string",
+      "default": "2024"
+    },
+    "mensagens": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::mensagem.mensagem",
+      "mappedBy": "protocolo"
+    }
+  }
+}

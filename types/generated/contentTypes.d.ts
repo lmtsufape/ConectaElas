@@ -1,79 +1,5 @@
 import type { Struct, Schema } from '@strapi/strapi';
 
-export interface ApiComentarioComentario extends Struct.CollectionTypeSchema {
-  collectionName: 'comentarios';
-  info: {
-    singularName: 'comentario';
-    pluralName: 'comentarios';
-    displayName: 'Comentarios';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    comentario: Schema.Attribute.String & Schema.Attribute.Required;
-    data: Schema.Attribute.DateTime;
-    users_permissions_user: Schema.Attribute.Relation<
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    admin_user: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
-    post: Schema.Attribute.Relation<'manyToOne', 'api::post.post'>;
-    createdAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    publishedAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::comentario.comentario'
-    >;
-  };
-}
-
-export interface ApiPostPost extends Struct.CollectionTypeSchema {
-  collectionName: 'posts';
-  info: {
-    singularName: 'post';
-    pluralName: 'posts';
-    displayName: 'Posts';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Title: Schema.Attribute.String & Schema.Attribute.Required;
-    Link: Schema.Attribute.String;
-    Uploadpost: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    >;
-    Description: Schema.Attribute.String & Schema.Attribute.Required;
-    comentarios: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::comentario.comentario'
-    >;
-    Categoria: Schema.Attribute.Enumeration<
-      ['Informativo', 'Not\u00EDcia', 'Relato']
-    > &
-      Schema.Attribute.Required;
-    createdAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    publishedAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::post.post'>;
-  };
-}
-
 export interface PluginUploadFile extends Struct.CollectionTypeSchema {
   collectionName: 'files';
   info: {
@@ -544,6 +470,7 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    mensagems: Schema.Attribute.Relation<'oneToMany', 'api::mensagem.mensagem'>;
     comentarios: Schema.Attribute.Relation<
       'oneToMany',
       'api::comentario.comentario'
@@ -559,6 +486,155 @@ export interface PluginUsersPermissionsUser
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiComentarioComentario extends Struct.CollectionTypeSchema {
+  collectionName: 'comentarios';
+  info: {
+    singularName: 'comentario';
+    pluralName: 'comentarios';
+    displayName: 'Comentarios';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    comentario: Schema.Attribute.String & Schema.Attribute.Required;
+    data: Schema.Attribute.DateTime;
+    id_usuario: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    admin_user: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    post: Schema.Attribute.Relation<'manyToOne', 'api::post.post'>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::comentario.comentario'
+    >;
+  };
+}
+
+export interface ApiMensagemMensagem extends Struct.CollectionTypeSchema {
+  collectionName: 'mensagens';
+  info: {
+    singularName: 'mensagem';
+    pluralName: 'mensagens';
+    displayName: 'Mensagem';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Mensagem: Schema.Attribute.String;
+    Tipo_Remetente: Schema.Attribute.Enumeration<['Usuario', 'Secretario']>;
+    remetente_id: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    Data_Envio: Schema.Attribute.DateTime;
+    Status_mensagem: Schema.Attribute.Enumeration<
+      ['Pendente', 'Enviado', 'Entregue', 'Lido']
+    > &
+      Schema.Attribute.DefaultTo<'Pendente'>;
+    protocolo: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::protocolo.protocolo'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::mensagem.mensagem'
+    >;
+  };
+}
+
+export interface ApiPostPost extends Struct.CollectionTypeSchema {
+  collectionName: 'posts';
+  info: {
+    singularName: 'post';
+    pluralName: 'posts';
+    displayName: 'Posts';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
+    Link: Schema.Attribute.String;
+    Uploadpost: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    Description: Schema.Attribute.String & Schema.Attribute.Required;
+    comentarios: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::comentario.comentario'
+    >;
+    Categoria: Schema.Attribute.Enumeration<
+      ['Informativo', 'Not\u00EDcia', 'Relato']
+    > &
+      Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::post.post'>;
+  };
+}
+
+export interface ApiProtocoloProtocolo extends Struct.CollectionTypeSchema {
+  collectionName: 'protocolos';
+  info: {
+    singularName: 'protocolo';
+    pluralName: 'protocolos';
+    displayName: 'Protocolos';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Data_Abertura: Schema.Attribute.DateTime;
+    Data_Fechamento: Schema.Attribute.DateTime;
+    Status_Protocolo: Schema.Attribute.Enumeration<['Pendente', 'Finalizado']> &
+      Schema.Attribute.DefaultTo<'Pendente'>;
+    ProtocoloID: Schema.Attribute.String & Schema.Attribute.DefaultTo<'2024'>;
+    mensagens: Schema.Attribute.Relation<'oneToMany', 'api::mensagem.mensagem'>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::protocolo.protocolo'
     >;
   };
 }
@@ -928,8 +1004,6 @@ export interface AdminTransferTokenPermission
 declare module '@strapi/strapi' {
   export module Public {
     export interface ContentTypeSchemas {
-      'api::comentario.comentario': ApiComentarioComentario;
-      'api::post.post': ApiPostPost;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::i18n.locale': PluginI18NLocale;
@@ -940,6 +1014,10 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::comentario.comentario': ApiComentarioComentario;
+      'api::mensagem.mensagem': ApiMensagemMensagem;
+      'api::post.post': ApiPostPost;
+      'api::protocolo.protocolo': ApiProtocoloProtocolo;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;
       'admin::role': AdminRole;

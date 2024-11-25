@@ -19,7 +19,7 @@
     "data": {
       "type": "datetime"
     },
-    "users_permissions_user": {
+    "id_usuario": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",

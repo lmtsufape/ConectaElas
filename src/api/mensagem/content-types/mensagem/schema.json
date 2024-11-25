@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mensagens",
+  "info": {
+    "singularName": "mensagem",
+    "pluralName": "mensagens",
+    "displayName": "Mensagem",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Mensagem": {
+      "type": "string"
+    },
+    "Tipo_Remetente": {
+      "type": "enumeration",
+      "enum": [
+        "Usuario",
+        "Secretario"
+      ]
+    },
+    "remetente_id": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "mensagems"
+    },
+    "Data_Envio": {
+      "type": "datetime"
+    },
+    "Status_mensagem": {
+      "type": "enumeration",
+      "enum": [
+        "Pendente",
+        "Enviado",
+        "Entregue",
+        "Lido"
+      ],
+      "default": "Pendente"
+    },
+    "protocolo": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::protocolo.protocolo",
+      "inversedBy": "mensagens"
+    }
+  }
+}

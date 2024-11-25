@@ -17,10 +17,10 @@ services:
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=root
       - HOST=0.0.0.0
-      - PORT=1337
+      - PORT=1338
       - JWT_SECRET=ZlpG7CxK5+VLz+ydOoJ8sA==
     ports:
-      - '1337:1337'
+      - '1338:1338'
     depends_on:
       - db
     command: npm run start  # Roda em modo de produção
