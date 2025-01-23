@@ -22,12 +22,6 @@
         "Secretario"
       ]
     },
-    "remetente_id": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "mensagems"
-    },
     "Data_Envio": {
       "type": "datetime"
     },
@@ -45,6 +39,12 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::protocolo.protocolo",
+      "inversedBy": "mensagens"
+    },
+    "remetente": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
       "inversedBy": "mensagens"
     }
   }

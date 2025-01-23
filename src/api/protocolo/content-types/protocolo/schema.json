@@ -27,8 +27,7 @@
       "default": "Pendente"
     },
     "ProtocoloID": {
-      "type": "string",
-      "default": "2024"
+      "type": "string"
     },
     "mensagens": {
       "type": "relation",

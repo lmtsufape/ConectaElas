@@ -441,7 +441,6 @@ export interface PluginUsersPermissionsUser
     displayName: 'User';
   };
   options: {
-    timestamps: true;
     draftAndPublish: false;
   };
   attributes: {
@@ -470,11 +469,11 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    mensagems: Schema.Attribute.Relation<'oneToMany', 'api::mensagem.mensagem'>;
     comentarios: Schema.Attribute.Relation<
       'oneToMany',
       'api::comentario.comentario'
     >;
+    mensagens: Schema.Attribute.Relation<'oneToMany', 'api::mensagem.mensagem'>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -539,10 +538,6 @@ export interface ApiMensagemMensagem extends Struct.CollectionTypeSchema {
   attributes: {
     Mensagem: Schema.Attribute.String;
     Tipo_Remetente: Schema.Attribute.Enumeration<['Usuario', 'Secretario']>;
-    remetente_id: Schema.Attribute.Relation<
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
     Data_Envio: Schema.Attribute.DateTime;
     Status_mensagem: Schema.Attribute.Enumeration<
       ['Pendente', 'Enviado', 'Entregue', 'Lido']
@@ -551,6 +546,10 @@ export interface ApiMensagemMensagem extends Struct.CollectionTypeSchema {
     protocolo: Schema.Attribute.Relation<
       'manyToOne',
       'api::protocolo.protocolo'
+    >;
+    remetente: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
     >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
@@ -622,7 +621,7 @@ export interface ApiProtocoloProtocolo extends Struct.CollectionTypeSchema {
     Data_Fechamento: Schema.Attribute.DateTime;
     Status_Protocolo: Schema.Attribute.Enumeration<['Pendente', 'Finalizado']> &
       Schema.Attribute.DefaultTo<'Pendente'>;
-    ProtocoloID: Schema.Attribute.String & Schema.Attribute.DefaultTo<'2024'>;
+    ProtocoloID: Schema.Attribute.String;
     mensagens: Schema.Attribute.Relation<'oneToMany', 'api::mensagem.mensagem'>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;

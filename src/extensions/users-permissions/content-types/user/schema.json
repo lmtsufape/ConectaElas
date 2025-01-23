@@ -9,7 +9,7 @@
     "displayName": "User"
   },
   "options": {
-    "timestamps": true
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -65,17 +65,17 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "mensagems": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::mensagem.mensagem",
-      "mappedBy": "remetente_id"
-    },
     "comentarios": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::comentario.comentario",
       "mappedBy": "id_usuario"
+    },
+    "mensagens": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::mensagem.mensagem",
+      "mappedBy": "remetente"
     }
   }
 }
