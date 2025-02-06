@@ -474,6 +474,8 @@ export interface PluginUsersPermissionsUser
       'api::comentario.comentario'
     >;
     mensagens: Schema.Attribute.Relation<'oneToMany', 'api::mensagem.mensagem'>;
+    Tipo: Schema.Attribute.Enumeration<['Usu\u00E1rio', 'Assistente']> &
+      Schema.Attribute.DefaultTo<'Usu\u00E1rio'>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -536,9 +538,10 @@ export interface ApiMensagemMensagem extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    Mensagem: Schema.Attribute.String;
-    Tipo_Remetente: Schema.Attribute.Enumeration<['Usuario', 'Secretario']>;
-    Data_Envio: Schema.Attribute.DateTime;
+    Mensagem: Schema.Attribute.String & Schema.Attribute.Required;
+    Tipo_Remetente: Schema.Attribute.Enumeration<['Usuario', 'Secretario']> &
+      Schema.Attribute.Required;
+    Data_Envio: Schema.Attribute.DateTime & Schema.Attribute.Required;
     Status_mensagem: Schema.Attribute.Enumeration<
       ['Pendente', 'Enviado', 'Entregue', 'Lido']
     > &

@@ -76,6 +76,15 @@
       "relation": "oneToMany",
       "target": "api::mensagem.mensagem",
       "mappedBy": "remetente"
+    },
+    "Tipo": {
+      "type": "enumeration",
+      "enum": [
+        "Usuário",
+        "Assistente"
+      ],
+      "default": "Usuário",
+      "required": false
     }
   }
 }

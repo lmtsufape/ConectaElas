@@ -13,17 +13,20 @@
   "pluginOptions": {},
   "attributes": {
     "Mensagem": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "Tipo_Remetente": {
       "type": "enumeration",
       "enum": [
         "Usuario",
         "Secretario"
-      ]
+      ],
+      "required": true
     },
     "Data_Envio": {
-      "type": "datetime"
+      "type": "datetime",
+      "required": true
     },
     "Status_mensagem": {
       "type": "enumeration",
