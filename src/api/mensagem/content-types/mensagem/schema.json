@@ -16,14 +16,6 @@
       "type": "string",
       "required": true
     },
-    "Tipo_Remetente": {
-      "type": "enumeration",
-      "enum": [
-        "Usuario",
-        "Secretario"
-      ],
-      "required": true
-    },
     "Data_Envio": {
       "type": "datetime",
       "required": true

@@ -539,8 +539,6 @@ export interface ApiMensagemMensagem extends Struct.CollectionTypeSchema {
   };
   attributes: {
     Mensagem: Schema.Attribute.String & Schema.Attribute.Required;
-    Tipo_Remetente: Schema.Attribute.Enumeration<['Usuario', 'Secretario']> &
-      Schema.Attribute.Required;
     Data_Envio: Schema.Attribute.DateTime & Schema.Attribute.Required;
     Status_mensagem: Schema.Attribute.Enumeration<
       ['Pendente', 'Enviado', 'Entregue', 'Lido']
