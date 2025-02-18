@@ -85,6 +85,12 @@
       ],
       "default": "Usuário",
       "required": false
+    },
+    "protocolos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::protocolo.protocolo",
+      "mappedBy": "usuario"
     }
   }
 }

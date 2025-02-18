@@ -34,6 +34,12 @@
       "relation": "oneToMany",
       "target": "api::mensagem.mensagem",
       "mappedBy": "protocolo"
+    },
+    "usuario": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "protocolos"
     }
   }
 }

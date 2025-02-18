@@ -476,6 +476,10 @@ export interface PluginUsersPermissionsUser
     mensagens: Schema.Attribute.Relation<'oneToMany', 'api::mensagem.mensagem'>;
     Tipo: Schema.Attribute.Enumeration<['Usu\u00E1rio', 'Assistente']> &
       Schema.Attribute.DefaultTo<'Usu\u00E1rio'>;
+    protocolos: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::protocolo.protocolo'
+    >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -624,6 +628,10 @@ export interface ApiProtocoloProtocolo extends Struct.CollectionTypeSchema {
       Schema.Attribute.DefaultTo<'Pendente'>;
     ProtocoloID: Schema.Attribute.String;
     mensagens: Schema.Attribute.Relation<'oneToMany', 'api::mensagem.mensagem'>;
+    usuario: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
