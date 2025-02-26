@@ -626,12 +626,13 @@ export interface ApiProtocoloProtocolo extends Struct.CollectionTypeSchema {
     Data_Fechamento: Schema.Attribute.DateTime;
     Status_Protocolo: Schema.Attribute.Enumeration<['Pendente', 'Finalizado']> &
       Schema.Attribute.DefaultTo<'Pendente'>;
-    ProtocoloID: Schema.Attribute.String;
+    ProtocoloID: Schema.Attribute.String & Schema.Attribute.Unique;
     mensagens: Schema.Attribute.Relation<'oneToMany', 'api::mensagem.mensagem'>;
     usuario: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.user'
     >;
+    socket_id: Schema.Attribute.Blocks;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;

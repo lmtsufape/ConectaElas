@@ -27,7 +27,8 @@
       "default": "Pendente"
     },
     "ProtocoloID": {
-      "type": "string"
+      "type": "string",
+      "unique": true
     },
     "mensagens": {
       "type": "relation",
@@ -40,6 +41,9 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "protocolos"
+    },
+    "socket_id": {
+      "type": "blocks"
     }
   }
 }
