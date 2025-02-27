@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import { error } from "console";
 export default {
   register() {},
 
@@ -30,26 +31,40 @@ export default {
     
         const userId = decoded.id;
         console.log(`✅ Usuário autenticado (${userId}) conectado:`, socket.id);
+
+        const userStored = await strapi.db.query('plugin::users-permissions.user').findOne({
+          where: { id: userId }
+        });
+
+        if (!userStored)
+          throw new Error('Usuário não encontrado!');
     
         socket.on("join_chat", async (ProtocoloID) => {
           try {
-            const protocolo = [{id:16}];
-            if (!protocolo || protocolo.length === 0) {
-              console.log(ProtocoloID);
-              throw new Error("Protocolo não encontrado.");
+            const protocolo = await strapi.db.query('api::protocolo.protocolo').findOne({
+              where: { ProtocoloID: ProtocoloID }
+            })
+
+            console.log(protocolo)
+            if(!protocolo) {
+              throw new Error('Protocolo não encontrado!');
             }
-        const idDoProtocolo = protocolo[0].id
+
+            if (protocolo.Status_Protocolo === 'Finalizado')
+              throw new Error("Protocolo já foi finalizado!");
+
+            const idDoProtocolo = protocolo.id
             socket.data.ProtocoloID = ProtocoloID;
             socket.data.id_protocolo = idDoProtocolo;
-            await strapi.entityService.update("api::protocolo.protocolo", idDoProtocolo, {
-              data: {
-                socket_id: socket.id,
-              },
+            await strapi.db.query('api::protocolo.protocolo').update({
+              where: { ProtocoloID: ProtocoloID },
+              data: { socket_id: socket.id}
             });
             console.log(`✅ Socket ID (${socket.id}) salvo no protocolo ${ProtocoloID}`);
 
             socket.join(ProtocoloID);
             console.log(`Usuário ${userId} entrou no chat do protocolo: ${ProtocoloID}`);
+            io.to(ProtocoloID).emit('user_connected', userStored.username);
           } catch (error) {
             console.error("❌ Erro ao atualizar o protocolo com o socket ID:", error);
           }
@@ -82,13 +97,9 @@ export default {
           const ProtocoloID = socket.data.ProtocoloID;
           
           if (ProtocoloID) {
+
+            io.to(ProtocoloID).emit("user_disconnect", userStored.username);
             try {
-              const idDoProtocolo = socket.data.id_protocolo;
-              await strapi.entityService.update("api::protocolo.protocolo", idDoProtocolo, {
-                data: {
-                  socket_id: null,
-                },
-              });
               console.log(`✅ Socket ID (${socket.id}) removido do protocolo ${ProtocoloID}`);
             } catch (error) {
               console.error("❌ Erro ao remover o socket ID do protocolo:", error);
