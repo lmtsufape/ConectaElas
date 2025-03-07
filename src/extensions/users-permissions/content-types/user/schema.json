@@ -91,6 +91,12 @@
       "relation": "oneToMany",
       "target": "api::protocolo.protocolo",
       "mappedBy": "usuario"
+    },
+    "denuncias": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::denuncia.denuncia",
+      "mappedBy": "usuario"
     }
   }
 }
