@@ -109,7 +109,7 @@ export default {
           } catch (error) {
             console.error("❌ Erro ao salvar mensagem:", error.details.errors);
           }
-        })
+        });
 
         socket.on("disconnect", async () => {
           console.log(`Usuário ${userId} desconectado:`, socket.id);

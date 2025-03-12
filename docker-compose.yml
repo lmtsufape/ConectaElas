@@ -1,7 +1,6 @@
-version: '3.8'
+# version: '3.8'
 
 services:
-
   strapi-prod:
     build:
       context: .
@@ -20,10 +19,10 @@ services:
       - PORT=1338
       - JWT_SECRET=ZlpG7CxK5+VLz+ydOoJ8sA==
     ports:
-      - '1338:1338'
+      - "1338:1338"
     depends_on:
       - db
-    command: npm run start  # Roda em modo de produção
+    command: npm run start # Roda em modo de produção
 
   # Serviço do banco de dados
   db:
