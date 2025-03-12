@@ -531,6 +531,35 @@ export interface ApiComentarioComentario extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiContatoDoAnjoContatoDoAnjo
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'contato_do_anjos';
+  info: {
+    singularName: 'contato-do-anjo';
+    pluralName: 'contato-do-anjos';
+    displayName: 'Contato do anjo';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Nome: Schema.Attribute.String & Schema.Attribute.Required;
+    Numero: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contato-do-anjo.contato-do-anjo'
+    >;
+  };
+}
+
 export interface ApiDenunciaDenuncia extends Struct.CollectionTypeSchema {
   collectionName: 'denuncias';
   info: {
@@ -1062,6 +1091,7 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::comentario.comentario': ApiComentarioComentario;
+      'api::contato-do-anjo.contato-do-anjo': ApiContatoDoAnjoContatoDoAnjo;
       'api::denuncia.denuncia': ApiDenunciaDenuncia;
       'api::mensagem.mensagem': ApiMensagemMensagem;
       'api::post.post': ApiPostPost;
