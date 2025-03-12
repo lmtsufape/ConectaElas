@@ -4,7 +4,8 @@
   "info": {
     "singularName": "contato-do-anjo",
     "pluralName": "contato-do-anjos",
-    "displayName": "Contato do anjo"
+    "displayName": "Contato do anjo",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -18,6 +19,12 @@
     "Numero": {
       "type": "string",
       "required": true
+    },
+    "usuario": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "contato_do_anjos"
     }
   }
 }

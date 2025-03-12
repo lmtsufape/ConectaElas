@@ -481,6 +481,10 @@ export interface PluginUsersPermissionsUser
       'api::protocolo.protocolo'
     >;
     denuncias: Schema.Attribute.Relation<'oneToMany', 'api::denuncia.denuncia'>;
+    contato_do_anjos: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contato-do-anjo.contato-do-anjo'
+    >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -538,6 +542,7 @@ export interface ApiContatoDoAnjoContatoDoAnjo
     singularName: 'contato-do-anjo';
     pluralName: 'contato-do-anjos';
     displayName: 'Contato do anjo';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -545,6 +550,10 @@ export interface ApiContatoDoAnjoContatoDoAnjo
   attributes: {
     Nome: Schema.Attribute.String & Schema.Attribute.Required;
     Numero: Schema.Attribute.String & Schema.Attribute.Required;
+    usuario: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;

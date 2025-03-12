@@ -97,6 +97,12 @@
       "relation": "oneToMany",
       "target": "api::denuncia.denuncia",
       "mappedBy": "usuario"
+    },
+    "contato_do_anjos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::contato-do-anjo.contato-do-anjo",
+      "mappedBy": "usuario"
     }
   }
 }
