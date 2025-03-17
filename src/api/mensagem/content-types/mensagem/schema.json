@@ -41,6 +41,10 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "mensagens"
+    },
+    "Leitura": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

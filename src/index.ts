@@ -111,27 +111,28 @@ export default {
           }
         });
 
-        socket.on("disconnect", async () => {
-          console.log(`Usuário ${userId} desconectado:`, socket.id);
+            socket.on("disconnect", async () => {
+      console.log(`Usuário ${userId} desconectado:`, socket.id);
 
-          const ProtocoloID = socket.data.ProtocoloID;
+      const ProtocoloID = socket.data.ProtocoloID;
 
-          if (ProtocoloID) {
-            io.to(ProtocoloID).emit("user_disconnect", userStored.username);
-            try {
-              console.log(
-                `✅ Socket ID (${socket.id}) removido do protocolo ${ProtocoloID}`
-              );
-            } catch (error) {
-              console.error(
-                "❌ Erro ao remover o socket ID do protocolo:",
-                error
-              );
-            }
-          } else {
-            console.log("⚠️ ProtocoloID não encontrado no socket.");
+      if (ProtocoloID) {
+        io.to(ProtocoloID).emit("user_disconnect", userStored.username);
+        try {
+            await strapi.db.query("api::protocolo.protocolo").update({
+              where: { ProtocoloID: ProtocoloID },
+              data: { socket_id: null },
+            });
+
+            console.log(`✅ Socket ID removido do protocolo ${ProtocoloID}`);
+          } catch (error) {
+            console.error("❌ Erro ao remover o socket ID do protocolo:", error);
           }
-        });
+        } else {
+          console.log("⚠️ ProtocoloID não encontrado no socket.");
+        }
+      });
+
       } catch (error) {
         console.log("🛑 Erro na autenticação do usuário:", error);
         socket.disconnect();
