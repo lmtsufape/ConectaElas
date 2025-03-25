@@ -31,7 +31,7 @@
       ]
     },
     "Description": {
-      "type": "string",
+      "type": "text",
       "required": true
     },
     "comentarios": {

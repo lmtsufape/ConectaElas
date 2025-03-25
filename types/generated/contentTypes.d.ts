@@ -500,6 +500,36 @@ export interface PluginUsersPermissionsUser
   };
 }
 
+export interface ApiBannerBanner extends Struct.CollectionTypeSchema {
+  collectionName: 'banners';
+  info: {
+    singularName: 'banner';
+    pluralName: 'banners';
+    displayName: 'Banner';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Link: Schema.Attribute.String;
+    Titulo: Schema.Attribute.String & Schema.Attribute.Required;
+    Upload: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::banner.banner'>;
+  };
+}
+
 export interface ApiComentarioComentario extends Struct.CollectionTypeSchema {
   collectionName: 'comentarios';
   info: {
@@ -666,7 +696,7 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
       'images' | 'files' | 'videos' | 'audios',
       true
     >;
-    Description: Schema.Attribute.String & Schema.Attribute.Required;
+    Description: Schema.Attribute.Text & Schema.Attribute.Required;
     comentarios: Schema.Attribute.Relation<
       'oneToMany',
       'api::comentario.comentario'
@@ -1100,6 +1130,7 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::banner.banner': ApiBannerBanner;
       'api::comentario.comentario': ApiComentarioComentario;
       'api::contato-do-anjo.contato-do-anjo': ApiContatoDoAnjoContatoDoAnjo;
       'api::denuncia.denuncia': ApiDenunciaDenuncia;
