@@ -480,7 +480,6 @@ export interface PluginUsersPermissionsUser
       'oneToMany',
       'api::protocolo.protocolo'
     >;
-    denuncias: Schema.Attribute.Relation<'oneToMany', 'api::denuncia.denuncia'>;
     contato_do_anjos: Schema.Attribute.Relation<
       'oneToMany',
       'api::contato-do-anjo.contato-do-anjo'
@@ -595,43 +594,6 @@ export interface ApiContatoDoAnjoContatoDoAnjo
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::contato-do-anjo.contato-do-anjo'
-    >;
-  };
-}
-
-export interface ApiDenunciaDenuncia extends Struct.CollectionTypeSchema {
-  collectionName: 'denuncias';
-  info: {
-    singularName: 'denuncia';
-    pluralName: 'denuncias';
-    displayName: 'Denuncia';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Provas: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    >;
-    Relato: Schema.Attribute.Text;
-    Link_midia: Schema.Attribute.String;
-    usuario: Schema.Attribute.Relation<
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    createdAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    publishedAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::denuncia.denuncia'
     >;
   };
 }
@@ -1133,7 +1095,6 @@ declare module '@strapi/strapi' {
       'api::banner.banner': ApiBannerBanner;
       'api::comentario.comentario': ApiComentarioComentario;
       'api::contato-do-anjo.contato-do-anjo': ApiContatoDoAnjoContatoDoAnjo;
-      'api::denuncia.denuncia': ApiDenunciaDenuncia;
       'api::mensagem.mensagem': ApiMensagemMensagem;
       'api::post.post': ApiPostPost;
       'api::protocolo.protocolo': ApiProtocoloProtocolo;
