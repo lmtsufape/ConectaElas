@@ -92,6 +92,30 @@ export default {
             "user_connected",
             socket.data.userStored.username
           );
+          const mensagensParaAtualizar = await strapi.db
+            .query("api::mensagem.mensagem")
+            .findMany({
+              where: {
+                protocolo: { id: protocolo.id },
+                Leitura: false,
+                remetente: {
+                  id: { $ne: socket.data.userId },
+                },
+              },
+              select: ["id"],
+            });
+          const ids = mensagensParaAtualizar.map((m) => m.id);
+
+          if (ids.length > 0) {
+            await strapi.db.query("api::mensagem.mensagem").updateMany({
+              where: { id: { $in: ids } },
+              data: { Leitura: true },
+            });
+
+            io.to(ProtocoloID).emit("mensagens_atualizadas", {
+              protocoloId: ProtocoloID,
+            });
+          }
         } catch (error) {
           console.error(
             "❌ Erro ao associar usuário ao protocolo:",
@@ -159,8 +183,14 @@ export default {
           }
         }
       });
-    });
+      socket.on("typing", (data) => {
+        socket.to(data.ProtocoloID).emit("typing");
+      });
 
+      socket.on("stop_typing", (data) => {
+        socket.to(data.ProtocoloID).emit("stop_typing");
+      });
+    });
     strapi.io = io;
   },
 };
