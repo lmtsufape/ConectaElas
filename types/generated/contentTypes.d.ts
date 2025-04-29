@@ -484,6 +484,7 @@ export interface PluginUsersPermissionsUser
       'oneToMany',
       'api::contato-do-anjo.contato-do-anjo'
     >;
+    nome: Schema.Attribute.String & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;

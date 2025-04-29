@@ -97,6 +97,11 @@
       "relation": "oneToMany",
       "target": "api::contato-do-anjo.contato-do-anjo",
       "mappedBy": "usuario"
+    },
+    "nome": {
+      "type": "string",
+      "required": true,
+      "unique": false
     }
   }
 }
