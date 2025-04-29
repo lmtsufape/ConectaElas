@@ -485,6 +485,8 @@ export interface PluginUsersPermissionsUser
       'api::contato-do-anjo.contato-do-anjo'
     >;
     nome: Schema.Attribute.String & Schema.Attribute.Required;
+    is_onboarding_viewed: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;

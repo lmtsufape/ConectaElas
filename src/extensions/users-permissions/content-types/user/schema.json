@@ -102,6 +102,10 @@
       "type": "string",
       "required": true,
       "unique": false
+    },
+    "is_onboarding_viewed": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

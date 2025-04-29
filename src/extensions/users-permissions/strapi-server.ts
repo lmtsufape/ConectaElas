@@ -20,7 +20,6 @@ export default (plugin: typeof defaultPlugin) => {
           return ctx.badRequest('CPF inválido');
         }
 
-        // Força o CPF como username
         ctx.request.body.username = username;
 
         return await rawAuth.register(ctx);
@@ -32,8 +31,6 @@ export default (plugin: typeof defaultPlugin) => {
         if (!identifier || !password) {
           return ctx.badRequest('Identificador e senha obrigatórios');
         }
-
-        // CPF será usado como username (identifier)
         ctx.request.body.identifier = identifier;
 
         return await rawAuth.callback(ctx);
