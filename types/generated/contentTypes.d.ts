@@ -533,6 +533,41 @@ export interface ApiBannerBanner extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCodigoEmailCodigoEmail extends Struct.CollectionTypeSchema {
+  collectionName: 'codigo_emails';
+  info: {
+    singularName: 'codigo-email';
+    pluralName: 'codigo-emails';
+    displayName: 'codigoEmail';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    codigo: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 4;
+        maxLength: 4;
+      }>;
+    dataEnvio: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::codigo-email.codigo-email'
+    >;
+  };
+}
+
 export interface ApiComentarioComentario extends Struct.CollectionTypeSchema {
   collectionName: 'comentarios';
   info: {
@@ -1097,6 +1132,7 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::banner.banner': ApiBannerBanner;
+      'api::codigo-email.codigo-email': ApiCodigoEmailCodigoEmail;
       'api::comentario.comentario': ApiComentarioComentario;
       'api::contato-do-anjo.contato-do-anjo': ApiContatoDoAnjoContatoDoAnjo;
       'api::mensagem.mensagem': ApiMensagemMensagem;

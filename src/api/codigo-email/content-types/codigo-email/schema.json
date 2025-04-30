@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "codigo_emails",
+  "info": {
+    "singularName": "codigo-email",
+    "pluralName": "codigo-emails",
+    "displayName": "codigoEmail",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "codigo": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 4,
+      "minLength": 4
+    },
+    "dataEnvio": {
+      "type": "datetime",
+      "required": true
+    }
+  }
+}

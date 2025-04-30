@@ -11,7 +11,7 @@ export default {
     let random = gerarProtocoloAtendimento();
     event.params.data.ProtocoloID = random;
   },
-  beforeUpdate(event) { // A conexão do protocolo deve ser finalizada
+  beforeUpdate(event) {
     const { data } = event.params;
     if (data?.Status_Protocolo === 'Finalizado') {
       data.socket_id = null;

@@ -1,18 +1,20 @@
 import { validateCPF } from '../../utils/validateCPF';
 import * as defaultPlugin from '@strapi/plugin-users-permissions/server';
+import { sendCustomConfirmationEmail } from '../../custom/emails/registrocomcpf';
 
-console.log("Plugin users-permissions está sendo estendido");
+console.log('Plugin users-permissions está sendo estendido');
 
 export default (plugin: typeof defaultPlugin) => {
-  const rawAuth = plugin.controllers.auth({ strapi });
+  const originalAuthController = plugin.controllers.auth;
 
-  const auth = ({ strapi }) => {
+  plugin.controllers.auth = ({ strapi }) => {
+    const original = originalAuthController({ strapi });
+
     return {
-      ...rawAuth,
+      ...original,
 
-      register: async (ctx) => {
+      async register(ctx) {
         const { username, email, password } = ctx.request.body;
-
 
         console.log(ctx.request.body);
 
@@ -20,25 +22,44 @@ export default (plugin: typeof defaultPlugin) => {
           return ctx.badRequest('CPF inválido');
         }
 
-        ctx.request.body.username = username;
+        const cleanedCPF = username.replace(/\D/g, "");
 
-        return await rawAuth.register(ctx);
+        ctx.request.body.username = cleanedCPF;
+
+        const response = await original.register(ctx);
+
+        try {
+          const advancedSettings = await strapi
+            .store({ type: 'plugin', name: 'users-permissions', key: 'advanced' })
+            .get();
+
+          if (advancedSettings.email_confirmation) {
+            const user = await strapi
+              .query('plugin::users-permissions.user')
+              .findOne({ where: { email } });
+
+            if (user) {
+              await sendCustomConfirmationEmail(strapi, user);
+            }
+          }
+        } catch (err) {
+          console.warn('Erro ao enviar e-mail de confirmação:', err.message);
+        }
+
+        return response;
       },
 
-      callback: async (ctx) => {
+      async callback(ctx) {
         const { identifier, password } = ctx.request.body;
 
         if (!identifier || !password) {
           return ctx.badRequest('Identificador e senha obrigatórios');
         }
-        ctx.request.body.identifier = identifier;
 
-        return await rawAuth.callback(ctx);
-      }
+        return await original.callback(ctx);
+      },
     };
   };
-
-  plugin.controllers.auth = auth;
 
   return plugin;
 };
