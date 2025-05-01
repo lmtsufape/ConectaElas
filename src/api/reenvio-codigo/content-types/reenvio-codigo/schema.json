@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reenvio_codigos",
+  "info": {
+    "singularName": "reenvio-codigo",
+    "pluralName": "reenvio-codigos",
+    "displayName": "reenvio-codigo"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "codigo": {
+      "type": "string",
+      "maxLength": 5,
+      "minLength": 5,
+      "unique": true
+    },
+    "email": {
+      "type": "string"
+    },
+    "dataEnvio": {
+      "type": "datetime"
+    }
+  }
+}

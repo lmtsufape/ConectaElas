@@ -547,7 +547,6 @@ export interface ApiCodigoEmailCodigoEmail extends Struct.CollectionTypeSchema {
   attributes: {
     codigo: Schema.Attribute.String &
       Schema.Attribute.Required &
-      Schema.Attribute.Unique &
       Schema.Attribute.SetMinMaxLength<{
         minLength: 5;
         maxLength: 5;
@@ -789,6 +788,41 @@ export interface ApiProtocoloProtocolo extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::protocolo.protocolo'
+    >;
+  };
+}
+
+export interface ApiReenvioCodigoReenvioCodigo
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'reenvio_codigos';
+  info: {
+    singularName: 'reenvio-codigo';
+    pluralName: 'reenvio-codigos';
+    displayName: 'reenvio-codigo';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    codigo: Schema.Attribute.String &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 5;
+        maxLength: 5;
+      }>;
+    email: Schema.Attribute.String;
+    dataEnvio: Schema.Attribute.DateTime;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::reenvio-codigo.reenvio-codigo'
     >;
   };
 }
@@ -1176,6 +1210,7 @@ declare module '@strapi/strapi' {
       'api::mensagem.mensagem': ApiMensagemMensagem;
       'api::post.post': ApiPostPost;
       'api::protocolo.protocolo': ApiProtocoloProtocolo;
+      'api::reenvio-codigo.reenvio-codigo': ApiReenvioCodigoReenvioCodigo;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;
       'admin::role': AdminRole;

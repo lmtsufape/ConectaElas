@@ -15,7 +15,7 @@
     "codigo": {
       "type": "string",
       "required": true,
-      "unique": true,
+      "unique": false,
       "maxLength": 5,
       "minLength": 5
     },
