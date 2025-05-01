@@ -549,10 +549,13 @@ export interface ApiCodigoEmailCodigoEmail extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.Unique &
       Schema.Attribute.SetMinMaxLength<{
-        minLength: 4;
-        maxLength: 4;
+        minLength: 5;
+        maxLength: 5;
       }>;
     dataEnvio: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    email: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -633,6 +636,40 @@ export interface ApiContatoDoAnjoContatoDoAnjo
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::contato-do-anjo.contato-do-anjo'
+    >;
+  };
+}
+
+export interface ApiInserirCodigoInserirCodigo
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'inserir_codigos';
+  info: {
+    singularName: 'inserir-codigo';
+    pluralName: 'inserir-codigos';
+    displayName: 'InserirCodigo';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    codigo: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 5;
+        maxLength: 5;
+      }>;
+    email: Schema.Attribute.String & Schema.Attribute.Unique;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::inserir-codigo.inserir-codigo'
     >;
   };
 }
@@ -1135,6 +1172,7 @@ declare module '@strapi/strapi' {
       'api::codigo-email.codigo-email': ApiCodigoEmailCodigoEmail;
       'api::comentario.comentario': ApiComentarioComentario;
       'api::contato-do-anjo.contato-do-anjo': ApiContatoDoAnjoContatoDoAnjo;
+      'api::inserir-codigo.inserir-codigo': ApiInserirCodigoInserirCodigo;
       'api::mensagem.mensagem': ApiMensagemMensagem;
       'api::post.post': ApiPostPost;
       'api::protocolo.protocolo': ApiProtocoloProtocolo;

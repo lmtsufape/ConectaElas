@@ -2,6 +2,7 @@ import { validateCPF } from '../../utils/validateCPF';
 import * as defaultPlugin from '@strapi/plugin-users-permissions/server';
 import { sendCustomConfirmationEmail } from '../../custom/emails/registrocomcpf';
 
+
 console.log('Plugin users-permissions está sendo estendido');
 
 export default (plugin: typeof defaultPlugin) => {
@@ -14,16 +15,15 @@ export default (plugin: typeof defaultPlugin) => {
       ...original,
 
       async register(ctx) {
-        const { username, email, password } = ctx.request.body;
+        let { username, email } = ctx.request.body;
 
-        console.log(ctx.request.body);
+        console.log('➡️ Dados recebidos no register:', ctx.request.body);
 
         if (!username || !validateCPF(username)) {
           return ctx.badRequest('CPF inválido');
         }
 
-        const cleanedCPF = username.replace(/\D/g, "");
-
+        const cleanedCPF = username.replace(/\D/g, '');
         ctx.request.body.username = cleanedCPF;
 
         const response = await original.register(ctx);
@@ -43,7 +43,7 @@ export default (plugin: typeof defaultPlugin) => {
             }
           }
         } catch (err) {
-          console.warn('Erro ao enviar e-mail de confirmação:', err.message);
+          console.warn('⚠️ Erro ao enviar e-mail de confirmação:', err.message);
         }
 
         return response;

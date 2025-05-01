@@ -1,4 +1,11 @@
 import jwt from 'jsonwebtoken';
+import codigoEmail from '../../api/codigo-email/controllers/codigo-email';
+import { factories } from '@strapi/strapi';
+
+function gerarCodigo5Digitos() {
+    const codigo = Math.floor(Math.random() * 100000);
+    return codigo.toString().padStart(5, '0');
+}
 
 export async function sendCustomConfirmationEmail(strapi: any, user: any) {
   console.log('➡️ Enviando e-mail de confirmação customizado para:', user.email);
@@ -10,6 +17,9 @@ export async function sendCustomConfirmationEmail(strapi: any, user: any) {
     { expiresIn: '1d' }
   );
 
+  const codigo = gerarCodigo5Digitos();
+  const response = await strapi.entityService.create('api::codigo-email.codigo-email',{data:{codigo, dataEnvio : new Date(), email: user.email}});
+
   await strapi.entityService.update('plugin::users-permissions.user', user.id, {
     data: { confirmationToken: token },
   });
@@ -20,8 +30,8 @@ export async function sendCustomConfirmationEmail(strapi: any, user: any) {
       subject: 'Confirme seu cadastro',
       html: `
         <p>Olá!</p>
-        <p>Confirme seu e-mail clicando <a href="http://localhost:1338/api/auth/local=${token}">aqui</a>.</p>
-        <p>Este link expira em 24 horas.</p>
+        <p>Confirme seu e-mail com o código: ${codigo}.</p>
+        <p>Este código expira em 24 horas.</p>
       `,
     });
   } catch (err) {

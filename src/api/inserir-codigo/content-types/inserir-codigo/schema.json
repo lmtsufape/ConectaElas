@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "inserir_codigos",
+  "info": {
+    "singularName": "inserir-codigo",
+    "pluralName": "inserir-codigos",
+    "displayName": "InserirCodigo"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "codigo": {
+      "type": "string",
+      "required": true,
+      "maxLength": 5,
+      "minLength": 5
+    },
+    "email": {
+      "type": "string",
+      "unique": true
+    }
+  }
+}
