@@ -10,6 +10,10 @@ export default {
         origin: "*",
         methods: ["GET", "POST"],
       },
+      transports: ["websocket", "polling"],
+      allowUpgrades: true,
+      pingTimeout: 30000,
+      pingInterval: 25000,
     });
 
     io.on("connection", async (socket) => {

@@ -17,13 +17,10 @@ export default factories.createCoreController('api::inserir-codigo.inserir-codig
     }
 
     const codigos = await strapi.entityService.findMany('api::codigo-email.codigo-email', {
-        filters: {
-          email,
-        },
-        sort: { createdAt: 'desc' },
-        limit: 1,
-      });
-      
+      filters: { email },
+      sort: { createdAt: 'desc' },
+      limit: 1,
+    });
 
     if (!codigos || codigos.length === 0) {
       return ctx.badRequest('Nenhum código foi enviado');
@@ -49,6 +46,8 @@ export default factories.createCoreController('api::inserir-codigo.inserir-codig
         confirmationToken: null,
       },
     });
+
+    await strapi.entityService.delete('api::codigo-email.codigo-email', codigoEmail.id);
 
     return ctx.send({ message: 'E-mail confirmado com sucesso' });
   },
