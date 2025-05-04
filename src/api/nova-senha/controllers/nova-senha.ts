@@ -1,5 +1,6 @@
 import { factories } from '@strapi/strapi';
 import bcrypt from 'bcryptjs';
+import codigoSenha from '../../codigo-senha/controllers/codigo-senha';
 
 export default factories.createCoreController('api::nova-senha.nova-senha', ({ strapi }) => ({
   async create(ctx) {
@@ -23,6 +24,7 @@ export default factories.createCoreController('api::nova-senha.nova-senha', ({ s
     }
 
     const email = codigos[0].email;
+    const codigoSenha = codigos[0];
 
     const user = await strapi.db.query('plugin::users-permissions.user').findOne({
       where: { email },
@@ -41,6 +43,7 @@ export default factories.createCoreController('api::nova-senha.nova-senha', ({ s
       data: { password: hashedPassword },
     });
 
+    await strapi.entityService.delete('api::codigo-senha.codigo-senha', codigoSenha.id);
     return ctx.send({ message: 'Senha alterada com sucesso' });
   },
 }));
