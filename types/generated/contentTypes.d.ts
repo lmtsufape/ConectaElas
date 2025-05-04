@@ -570,6 +570,43 @@ export interface ApiCodigoEmailCodigoEmail extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCodigoSenhaCodigoSenha extends Struct.CollectionTypeSchema {
+  collectionName: 'codigo_senhas';
+  info: {
+    singularName: 'codigo-senha';
+    pluralName: 'codigo-senhas';
+    displayName: 'CodigoSenha';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    codigo: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 5;
+        maxLength: 5;
+      }>;
+    email: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    dataEnvio: Schema.Attribute.DateTime;
+    confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::codigo-senha.codigo-senha'
+    >;
+  };
+}
+
 export interface ApiComentarioComentario extends Struct.CollectionTypeSchema {
   collectionName: 'comentarios';
   info: {
@@ -673,6 +710,42 @@ export interface ApiInserirCodigoInserirCodigo
   };
 }
 
+export interface ApiInserirCodigoSenhaInserirCodigoSenha
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'inserir_codigo_senhas';
+  info: {
+    singularName: 'inserir-codigo-senha';
+    pluralName: 'inserir-codigo-senhas';
+    displayName: 'InserirCodigoSenha';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    codigo: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 5;
+        maxLength: 5;
+      }>;
+    email: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::inserir-codigo-senha.inserir-codigo-senha'
+    >;
+  };
+}
+
 export interface ApiMensagemMensagem extends Struct.CollectionTypeSchema {
   collectionName: 'mensagens';
   info: {
@@ -711,6 +784,39 @@ export interface ApiMensagemMensagem extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::mensagem.mensagem'
+    >;
+  };
+}
+
+export interface ApiNovaSenhaNovaSenha extends Struct.CollectionTypeSchema {
+  collectionName: 'nova_senhas';
+  info: {
+    singularName: 'nova-senha';
+    pluralName: 'nova-senhas';
+    displayName: 'NovaSenha';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    senha: Schema.Attribute.String;
+    email: Schema.Attribute.String & Schema.Attribute.Unique;
+    codigo: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 5;
+        maxLength: 5;
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::nova-senha.nova-senha'
     >;
   };
 }
@@ -788,6 +894,42 @@ export interface ApiProtocoloProtocolo extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::protocolo.protocolo'
+    >;
+  };
+}
+
+export interface ApiRedefinirSenhaRedefinirSenha
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'redefinir_senhas';
+  info: {
+    singularName: 'redefinir-senha';
+    pluralName: 'redefinir-senhas';
+    displayName: 'redefinir senha';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    codigo: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 5;
+        maxLength: 5;
+      }>;
+    email: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::redefinir-senha.redefinir-senha'
     >;
   };
 }
@@ -1204,12 +1346,16 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::banner.banner': ApiBannerBanner;
       'api::codigo-email.codigo-email': ApiCodigoEmailCodigoEmail;
+      'api::codigo-senha.codigo-senha': ApiCodigoSenhaCodigoSenha;
       'api::comentario.comentario': ApiComentarioComentario;
       'api::contato-do-anjo.contato-do-anjo': ApiContatoDoAnjoContatoDoAnjo;
       'api::inserir-codigo.inserir-codigo': ApiInserirCodigoInserirCodigo;
+      'api::inserir-codigo-senha.inserir-codigo-senha': ApiInserirCodigoSenhaInserirCodigoSenha;
       'api::mensagem.mensagem': ApiMensagemMensagem;
+      'api::nova-senha.nova-senha': ApiNovaSenhaNovaSenha;
       'api::post.post': ApiPostPost;
       'api::protocolo.protocolo': ApiProtocoloProtocolo;
+      'api::redefinir-senha.redefinir-senha': ApiRedefinirSenhaRedefinirSenha;
       'api::reenvio-codigo.reenvio-codigo': ApiReenvioCodigoReenvioCodigo;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;

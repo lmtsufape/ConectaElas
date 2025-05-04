@@ -3,7 +3,6 @@ import { validateCPF } from '../../../../utils/validateCPF'
 export default {
   async beforeCreate(event)
   {
-    console.log("Entrou aqui");
     const { data } = event.params;
 
     if (!data.username || !validateCPF(data.username)) {

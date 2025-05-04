@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "inserir_codigo_senhas",
+  "info": {
+    "singularName": "inserir-codigo-senha",
+    "pluralName": "inserir-codigo-senhas",
+    "displayName": "InserirCodigoSenha",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "codigo": {
+      "type": "string",
+      "maxLength": 5,
+      "minLength": 5
+    },
+    "email": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    }
+  }
+}

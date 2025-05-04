@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "codigo_senhas",
+  "info": {
+    "singularName": "codigo-senha",
+    "pluralName": "codigo-senhas",
+    "displayName": "CodigoSenha",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "codigo": {
+      "type": "string",
+      "maxLength": 5,
+      "minLength": 5
+    },
+    "email": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "dataEnvio": {
+      "type": "datetime"
+    },
+    "confirmed": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

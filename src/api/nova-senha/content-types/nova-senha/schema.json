@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "nova_senhas",
+  "info": {
+    "singularName": "nova-senha",
+    "pluralName": "nova-senhas",
+    "displayName": "NovaSenha"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "senha": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "unique": true
+    },
+    "codigo": {
+      "type": "string",
+      "maxLength": 5,
+      "minLength": 5
+    }
+  }
+}

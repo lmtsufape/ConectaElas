@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "redefinir_senhas",
+  "info": {
+    "singularName": "redefinir-senha",
+    "pluralName": "redefinir-senhas",
+    "displayName": "redefinir senha"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "codigo": {
+      "type": "string",
+      "maxLength": 5,
+      "minLength": 5,
+      "required": true
+    },
+    "email": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    }
+  }
+}
