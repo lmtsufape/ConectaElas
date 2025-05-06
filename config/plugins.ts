@@ -2,7 +2,7 @@ module.exports = ({ env }) => ({
   'users-permissions': {
     config: {
       register: {
-        confirmation: false, // <- desativa o envio automático
+        confirmation: false,
       },
     },
   },
@@ -19,8 +19,8 @@ module.exports = ({ env }) => ({
         secure: false,
       },
       settings: {
-        defaultFrom: 'conectaelasofc@gmail.com',
-        defaultReplyTo: 'conectaelasofc@gmail.com',
+        defaultFrom: env('SMTP_USERNAME'),
+        defaultReplyTo: env('SMTP_USERNAME'),
       },
     },
   },
