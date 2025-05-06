@@ -41,9 +41,38 @@ async function reenviarCodigo(strapi: any, email: string) {
       to: email,
       subject: "Confirmação de E-mail",
       html: `
-      <p>Olá!</p>
-      <p>Seu código de confirmação é: <strong>${novoCodigo}</strong></p>
-      <p>Este código expira em 24 horas.</p>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #fff7f9; padding: 30px; border-radius: 10px; border: 1px solid #f8d9e6;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <img src="https://lmtsteste04.ufape.edu.br/uploads/Logo_30229a345d.png" alt="Logo ConectaElas" style="max-width: 100px;" />
+      </div>
+    
+      <h2 style="color: #d63384; text-align: center;">ConectaElas</h2>
+    
+      <p style="font-size: 16px; color: #333;">Olá!</p>
+    
+      <p style="font-size: 16px; color: #333;">
+        Agradecemos por se registrar na plataforma <strong>ConectaElas</strong> — um espaço seguro e acolhedor feito para você.
+      </p>
+    
+      <p style="font-size: 16px; color: #333;">
+        Aqui está seu código de confirmação:
+      </p>
+    
+      <div style="background-color: #ffe3ed; padding: 15px; border-radius: 8px; text-align: center; margin: 20px 0;">
+        <span style="font-size: 24px; font-weight: bold; color: #c2185b;">${novoCodigo}</span>
+      </div>
+    
+      <p style="font-size: 14px; color: #666;">
+        Este código expira em 24 horas. Se você não solicitou este registro, pode ignorar este e-mail.
+      </p>
+    
+      <hr style="border: none; border-top: 1px solid #f8d9e6; margin: 30px 0;">
+    
+      <p style="font-size: 12px; color: #999; text-align: center;">
+        Com carinho,<br>
+        Equipe ConectaElas
+      </p>
+    </div>
     `,
     });
 }
