@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "quizzes",
+  "info": {
+    "singularName": "quiz",
+    "pluralName": "quizzes",
+    "displayName": "Quiz",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Titulo": {
+      "type": "string"
+    },
+    "perguntas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::pergunta.pergunta",
+      "mappedBy": "quiz"
+    }
+  }
+}

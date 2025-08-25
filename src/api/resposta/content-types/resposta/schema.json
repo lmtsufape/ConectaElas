@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "respostas",
+  "info": {
+    "singularName": "resposta",
+    "pluralName": "respostas",
+    "displayName": "Resposta",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Resposta": {
+      "type": "string"
+    },
+    "Correcao": {
+      "type": "boolean",
+      "default": false
+    },
+    "pergunta": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::pergunta.pergunta",
+      "inversedBy": "respostas"
+    }
+  }
+}

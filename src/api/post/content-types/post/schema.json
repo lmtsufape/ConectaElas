@@ -48,6 +48,12 @@
         "Relato"
       ],
       "required": true
+    },
+    "favoritos": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::favorito.favorito",
+      "inversedBy": "posts"
     }
   }
 }

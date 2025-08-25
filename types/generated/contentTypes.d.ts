@@ -676,6 +676,38 @@ export interface ApiContatoDoAnjoContatoDoAnjo
   };
 }
 
+export interface ApiFavoritoFavorito extends Struct.CollectionTypeSchema {
+  collectionName: 'favoritos';
+  info: {
+    singularName: 'favorito';
+    pluralName: 'favoritos';
+    displayName: 'Favorito';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    posts: Schema.Attribute.Relation<'manyToMany', 'api::post.post'>;
+    usuario: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::favorito.favorito'
+    >;
+  };
+}
+
 export interface ApiInserirCodigoInserirCodigo
   extends Struct.CollectionTypeSchema {
   collectionName: 'inserir_codigos';
@@ -821,6 +853,36 @@ export interface ApiNovaSenhaNovaSenha extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiPerguntaPergunta extends Struct.CollectionTypeSchema {
+  collectionName: 'perguntas';
+  info: {
+    singularName: 'pergunta';
+    pluralName: 'perguntas';
+    displayName: 'Pergunta';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Questao: Schema.Attribute.String;
+    quiz: Schema.Attribute.Relation<'manyToOne', 'api::quiz.quiz'>;
+    respostas: Schema.Attribute.Relation<'oneToMany', 'api::resposta.resposta'>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::pergunta.pergunta'
+    >;
+  };
+}
+
 export interface ApiPostPost extends Struct.CollectionTypeSchema {
   collectionName: 'posts';
   info: {
@@ -848,6 +910,10 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
       ['Informativo', 'Not\u00EDcia', 'Relato']
     > &
       Schema.Attribute.Required;
+    favoritos: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::favorito.favorito'
+    >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -895,6 +961,32 @@ export interface ApiProtocoloProtocolo extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::protocolo.protocolo'
     >;
+  };
+}
+
+export interface ApiQuizQuiz extends Struct.CollectionTypeSchema {
+  collectionName: 'quizzes';
+  info: {
+    singularName: 'quiz';
+    pluralName: 'quizzes';
+    displayName: 'Quiz';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Titulo: Schema.Attribute.String;
+    perguntas: Schema.Attribute.Relation<'oneToMany', 'api::pergunta.pergunta'>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::quiz.quiz'>;
   };
 }
 
@@ -965,6 +1057,36 @@ export interface ApiReenvioCodigoReenvioCodigo
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::reenvio-codigo.reenvio-codigo'
+    >;
+  };
+}
+
+export interface ApiRespostaResposta extends Struct.CollectionTypeSchema {
+  collectionName: 'respostas';
+  info: {
+    singularName: 'resposta';
+    pluralName: 'respostas';
+    displayName: 'Resposta';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Resposta: Schema.Attribute.String;
+    Correcao: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    pergunta: Schema.Attribute.Relation<'manyToOne', 'api::pergunta.pergunta'>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::resposta.resposta'
     >;
   };
 }
@@ -1349,14 +1471,18 @@ declare module '@strapi/strapi' {
       'api::codigo-senha.codigo-senha': ApiCodigoSenhaCodigoSenha;
       'api::comentario.comentario': ApiComentarioComentario;
       'api::contato-do-anjo.contato-do-anjo': ApiContatoDoAnjoContatoDoAnjo;
+      'api::favorito.favorito': ApiFavoritoFavorito;
       'api::inserir-codigo.inserir-codigo': ApiInserirCodigoInserirCodigo;
       'api::inserir-codigo-senha.inserir-codigo-senha': ApiInserirCodigoSenhaInserirCodigoSenha;
       'api::mensagem.mensagem': ApiMensagemMensagem;
       'api::nova-senha.nova-senha': ApiNovaSenhaNovaSenha;
+      'api::pergunta.pergunta': ApiPerguntaPergunta;
       'api::post.post': ApiPostPost;
       'api::protocolo.protocolo': ApiProtocoloProtocolo;
+      'api::quiz.quiz': ApiQuizQuiz;
       'api::redefinir-senha.redefinir-senha': ApiRedefinirSenhaRedefinirSenha;
       'api::reenvio-codigo.reenvio-codigo': ApiReenvioCodigoReenvioCodigo;
+      'api::resposta.resposta': ApiRespostaResposta;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;
       'admin::role': AdminRole;
