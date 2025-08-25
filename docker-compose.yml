@@ -23,8 +23,9 @@ services:
     depends_on:
       - db
     command: npm run start # Roda em modo de produção
+    volumes:
+      - ./public/uploads:/opt/app/public/uploads
 
-  # Serviço do banco de dados
   db:
     image: postgres:latest
     environment:
