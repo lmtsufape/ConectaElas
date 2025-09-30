@@ -1076,6 +1076,10 @@ export interface ApiRespostaResposta extends Struct.CollectionTypeSchema {
     Resposta: Schema.Attribute.String;
     Correcao: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     pergunta: Schema.Attribute.Relation<'manyToOne', 'api::pergunta.pergunta'>;
+    Explicacao: Schema.Attribute.String;
+    pontuacao: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'0'>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;

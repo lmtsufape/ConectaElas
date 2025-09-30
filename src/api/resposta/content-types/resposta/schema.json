@@ -24,6 +24,14 @@
       "relation": "manyToOne",
       "target": "api::pergunta.pergunta",
       "inversedBy": "respostas"
+    },
+    "Explicacao": {
+      "type": "string"
+    },
+    "pontuacao": {
+      "type": "string",
+      "required": true,
+      "default": "0"
     }
   }
 }
