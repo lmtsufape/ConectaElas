@@ -18,14 +18,6 @@
     "Data_Fechamento": {
       "type": "datetime"
     },
-    "Status_Protocolo": {
-      "type": "enumeration",
-      "enum": [
-        "Pendente",
-        "Finalizado"
-      ],
-      "default": "Pendente"
-    },
     "ProtocoloID": {
       "type": "string",
       "unique": true
@@ -45,6 +37,10 @@
     "socket_id": {
       "type": "string",
       "unique": true
+    },
+    "Status_Finalizado": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

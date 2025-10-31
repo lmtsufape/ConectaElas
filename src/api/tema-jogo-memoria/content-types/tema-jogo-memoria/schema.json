@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tema_jogo_memorias",
+  "info": {
+    "singularName": "tema-jogo-memoria",
+    "pluralName": "tema-jogo-memorias",
+    "displayName": "TemaJogoMemoria"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "cartas": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::carta.carta",
+      "mappedBy": "tema_jogo_memoria"
+    },
+    "Nome_tema": {
+      "type": "string"
+    },
+    "jogo_memoria": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::jogo-memoria.jogo-memoria",
+      "inversedBy": "tema_jogo_memorias"
+    }
+  }
+}

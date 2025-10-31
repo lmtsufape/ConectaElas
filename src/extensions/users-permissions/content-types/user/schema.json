@@ -106,6 +106,12 @@
     "is_onboarding_viewed": {
       "type": "boolean",
       "default": false
+    },
+    "pontuacaos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::pontuacao.pontuacao",
+      "mappedBy": "users_permissions_user"
     }
   }
 }

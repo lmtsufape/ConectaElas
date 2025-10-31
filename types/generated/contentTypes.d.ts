@@ -487,6 +487,10 @@ export interface PluginUsersPermissionsUser
     nome: Schema.Attribute.String & Schema.Attribute.Required;
     is_onboarding_viewed: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
+    pontuacaos: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::pontuacao.pontuacao'
+    >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -530,6 +534,41 @@ export interface ApiBannerBanner extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::banner.banner'>;
+  };
+}
+
+export interface ApiCartaCarta extends Struct.CollectionTypeSchema {
+  collectionName: 'cartas';
+  info: {
+    singularName: 'carta';
+    pluralName: 'cartas';
+    displayName: 'Carta';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Imagem: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    Link_imagem: Schema.Attribute.String;
+    identificacao: Schema.Attribute.String & Schema.Attribute.Required;
+    tema_jogo_memoria: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::tema-jogo-memoria.tema-jogo-memoria'
+    >;
+    Acerto: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    Frase: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::carta.carta'>;
   };
 }
 
@@ -778,6 +817,42 @@ export interface ApiInserirCodigoSenhaInserirCodigoSenha
   };
 }
 
+export interface ApiJogoMemoriaJogoMemoria extends Struct.CollectionTypeSchema {
+  collectionName: 'jogo_memorias';
+  info: {
+    singularName: 'jogo-memoria';
+    pluralName: 'jogo-memorias';
+    displayName: 'JogoMemoria';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Titulo: Schema.Attribute.String;
+    tema_jogo_memorias: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::tema-jogo-memoria.tema-jogo-memoria'
+    >;
+    pontuacaos: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::pontuacao.pontuacao'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::jogo-memoria.jogo-memoria'
+    >;
+  };
+}
+
 export interface ApiMensagemMensagem extends Struct.CollectionTypeSchema {
   collectionName: 'mensagens';
   info: {
@@ -883,6 +958,43 @@ export interface ApiPerguntaPergunta extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiPontuacaoPontuacao extends Struct.CollectionTypeSchema {
+  collectionName: 'pontuacoes';
+  info: {
+    singularName: 'pontuacao';
+    pluralName: 'pontuacoes';
+    displayName: 'Pontuacao';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    quiz: Schema.Attribute.Relation<'oneToOne', 'api::quiz.quiz'>;
+    users_permissions_user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    total: Schema.Attribute.String;
+    jogo_memorias: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::jogo-memoria.jogo-memoria'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::pontuacao.pontuacao'
+    >;
+  };
+}
+
 export interface ApiPostPost extends Struct.CollectionTypeSchema {
   collectionName: 'posts';
   info: {
@@ -940,8 +1052,6 @@ export interface ApiProtocoloProtocolo extends Struct.CollectionTypeSchema {
   attributes: {
     Data_Abertura: Schema.Attribute.DateTime;
     Data_Fechamento: Schema.Attribute.DateTime;
-    Status_Protocolo: Schema.Attribute.Enumeration<['Pendente', 'Finalizado']> &
-      Schema.Attribute.DefaultTo<'Pendente'>;
     ProtocoloID: Schema.Attribute.String & Schema.Attribute.Unique;
     mensagens: Schema.Attribute.Relation<'oneToMany', 'api::mensagem.mensagem'>;
     usuario: Schema.Attribute.Relation<
@@ -949,6 +1059,8 @@ export interface ApiProtocoloProtocolo extends Struct.CollectionTypeSchema {
       'plugin::users-permissions.user'
     >;
     socket_id: Schema.Attribute.String & Schema.Attribute.Unique;
+    Status_Finalizado: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -978,6 +1090,10 @@ export interface ApiQuizQuiz extends Struct.CollectionTypeSchema {
   attributes: {
     Titulo: Schema.Attribute.String;
     perguntas: Schema.Attribute.Relation<'oneToMany', 'api::pergunta.pergunta'>;
+    pontuacao: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::pontuacao.pontuacao'
+    >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -1091,6 +1207,39 @@ export interface ApiRespostaResposta extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::resposta.resposta'
+    >;
+  };
+}
+
+export interface ApiTemaJogoMemoriaTemaJogoMemoria
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'tema_jogo_memorias';
+  info: {
+    singularName: 'tema-jogo-memoria';
+    pluralName: 'tema-jogo-memorias';
+    displayName: 'TemaJogoMemoria';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    cartas: Schema.Attribute.Relation<'oneToMany', 'api::carta.carta'>;
+    Nome_tema: Schema.Attribute.String;
+    jogo_memoria: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::jogo-memoria.jogo-memoria'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::tema-jogo-memoria.tema-jogo-memoria'
     >;
   };
 }
@@ -1471,6 +1620,7 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::banner.banner': ApiBannerBanner;
+      'api::carta.carta': ApiCartaCarta;
       'api::codigo-email.codigo-email': ApiCodigoEmailCodigoEmail;
       'api::codigo-senha.codigo-senha': ApiCodigoSenhaCodigoSenha;
       'api::comentario.comentario': ApiComentarioComentario;
@@ -1478,15 +1628,18 @@ declare module '@strapi/strapi' {
       'api::favorito.favorito': ApiFavoritoFavorito;
       'api::inserir-codigo.inserir-codigo': ApiInserirCodigoInserirCodigo;
       'api::inserir-codigo-senha.inserir-codigo-senha': ApiInserirCodigoSenhaInserirCodigoSenha;
+      'api::jogo-memoria.jogo-memoria': ApiJogoMemoriaJogoMemoria;
       'api::mensagem.mensagem': ApiMensagemMensagem;
       'api::nova-senha.nova-senha': ApiNovaSenhaNovaSenha;
       'api::pergunta.pergunta': ApiPerguntaPergunta;
+      'api::pontuacao.pontuacao': ApiPontuacaoPontuacao;
       'api::post.post': ApiPostPost;
       'api::protocolo.protocolo': ApiProtocoloProtocolo;
       'api::quiz.quiz': ApiQuizQuiz;
       'api::redefinir-senha.redefinir-senha': ApiRedefinirSenhaRedefinirSenha;
       'api::reenvio-codigo.reenvio-codigo': ApiReenvioCodigoReenvioCodigo;
       'api::resposta.resposta': ApiRespostaResposta;
+      'api::tema-jogo-memoria.tema-jogo-memoria': ApiTemaJogoMemoriaTemaJogoMemoria;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;
       'admin::role': AdminRole;

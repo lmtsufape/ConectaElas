@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "quizzes",
+  "collectionName": "jogo_memorias",
   "info": {
-    "singularName": "quiz",
-    "pluralName": "quizzes",
-    "displayName": "Quiz",
+    "singularName": "jogo-memoria",
+    "pluralName": "jogo-memorias",
+    "displayName": "JogoMemoria",
     "description": ""
   },
   "options": {
@@ -15,17 +15,17 @@
     "Titulo": {
       "type": "string"
     },
-    "perguntas": {
+    "tema_jogo_memorias": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::pergunta.pergunta",
-      "mappedBy": "quiz"
+      "target": "api::tema-jogo-memoria.tema-jogo-memoria",
+      "mappedBy": "jogo_memoria"
     },
-    "pontuacao": {
+    "pontuacaos": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToMany",
       "target": "api::pontuacao.pontuacao",
-      "mappedBy": "quiz"
+      "mappedBy": "jogo_memorias"
     }
   }
 }

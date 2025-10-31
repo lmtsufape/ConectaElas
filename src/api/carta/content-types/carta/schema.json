@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cartas",
+  "info": {
+    "singularName": "carta",
+    "pluralName": "cartas",
+    "displayName": "Carta",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Imagem": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Link_imagem": {
+      "type": "string"
+    },
+    "identificacao": {
+      "type": "string",
+      "required": true
+    },
+    "tema_jogo_memoria": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::tema-jogo-memoria.tema-jogo-memoria",
+      "inversedBy": "cartas"
+    },
+    "Acerto": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "Frase": {
+      "type": "string"
+    }
+  }
+}
