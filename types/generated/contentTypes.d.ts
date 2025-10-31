@@ -1004,7 +1004,7 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     Title: Schema.Attribute.String & Schema.Attribute.Required;
