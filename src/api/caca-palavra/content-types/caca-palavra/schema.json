@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "caca_palavras",
+  "info": {
+    "singularName": "caca-palavra",
+    "pluralName": "caca-palavras",
+    "displayName": "Caca-Palavras",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "grade": {
+      "type": "json",
+      "required": false
+    },
+    "titulo": {
+      "type": "string",
+      "required": true
+    },
+    "palavras": {
+      "type": "json",
+      "required": false
+    }
+  }
+}

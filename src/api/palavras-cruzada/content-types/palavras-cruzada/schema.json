@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "palavras_cruzadas",
+  "info": {
+    "singularName": "palavras-cruzada",
+    "pluralName": "palavras-cruzadas",
+    "displayName": "palavras_cruzadas"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "titulo": {
+      "type": "string",
+      "required": true
+    },
+    "palavras": {
+      "type": "json",
+      "required": true
+    },
+    "dicas": {
+      "type": "json",
+      "required": true
+    },
+    "grade": {
+      "type": "json"
+    }
+  }
+}

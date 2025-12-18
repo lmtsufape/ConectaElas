@@ -537,6 +537,36 @@ export interface ApiBannerBanner extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCacaPalavraCacaPalavra extends Struct.CollectionTypeSchema {
+  collectionName: 'caca_palavras';
+  info: {
+    singularName: 'caca-palavra';
+    pluralName: 'caca-palavras';
+    displayName: 'Caca-Palavras';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    grade: Schema.Attribute.JSON;
+    titulo: Schema.Attribute.String & Schema.Attribute.Required;
+    palavras: Schema.Attribute.JSON;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::caca-palavra.caca-palavra'
+    >;
+  };
+}
+
 export interface ApiCartaCarta extends Struct.CollectionTypeSchema {
   collectionName: 'cartas';
   info: {
@@ -924,6 +954,37 @@ export interface ApiNovaSenhaNovaSenha extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::nova-senha.nova-senha'
+    >;
+  };
+}
+
+export interface ApiPalavrasCruzadaPalavrasCruzada
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'palavras_cruzadas';
+  info: {
+    singularName: 'palavras-cruzada';
+    pluralName: 'palavras-cruzadas';
+    displayName: 'palavras_cruzadas';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    titulo: Schema.Attribute.String & Schema.Attribute.Required;
+    palavras: Schema.Attribute.JSON & Schema.Attribute.Required;
+    dicas: Schema.Attribute.JSON & Schema.Attribute.Required;
+    grade: Schema.Attribute.JSON;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::palavras-cruzada.palavras-cruzada'
     >;
   };
 }
@@ -1620,6 +1681,7 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::banner.banner': ApiBannerBanner;
+      'api::caca-palavra.caca-palavra': ApiCacaPalavraCacaPalavra;
       'api::carta.carta': ApiCartaCarta;
       'api::codigo-email.codigo-email': ApiCodigoEmailCodigoEmail;
       'api::codigo-senha.codigo-senha': ApiCodigoSenhaCodigoSenha;
@@ -1631,6 +1693,7 @@ declare module '@strapi/strapi' {
       'api::jogo-memoria.jogo-memoria': ApiJogoMemoriaJogoMemoria;
       'api::mensagem.mensagem': ApiMensagemMensagem;
       'api::nova-senha.nova-senha': ApiNovaSenhaNovaSenha;
+      'api::palavras-cruzada.palavras-cruzada': ApiPalavrasCruzadaPalavrasCruzada;
       'api::pergunta.pergunta': ApiPerguntaPergunta;
       'api::pontuacao.pontuacao': ApiPontuacaoPontuacao;
       'api::post.post': ApiPostPost;
