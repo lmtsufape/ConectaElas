@@ -11,17 +11,39 @@ export default factories.createCoreController(
           return ctx.badRequest("Dados são obrigatórios");
         }
 
-        const { jogo, acertos, totalPerguntas = 10 } = data;
+        const { jogo, acertos, totalPerguntas } = data;
 
         if (!jogo) {
           return ctx.badRequest("Tipo de jogo é obrigatório");
         }
+
+        console.log("DEBUG - Dados recebidos:", {
+          jogo,
+          acertos,
+          totalPerguntas,
+          cacaPalavraId: data.cacaPalavraId,
+          allData: data,
+        });
 
         const pontuacaoService = strapi.service("api::pontuacao.pontuacao");
         if (!pontuacaoService.validarJogo(jogo)) {
           return ctx.badRequest(
             `Tipo de jogo inválido. Valores aceitos: quiz, memoria, palavracruzada, cacapalavras`,
           );
+        }
+        let totalPerguntasCalculado = totalPerguntas;
+        if (!totalPerguntasCalculado) {
+          if (jogo === "cacapalavras" && data.cacaPalavraId) {
+            const cacaPalavra = await strapi.entityService.findOne(
+              "api::caca-palavra.caca-palavra",
+              data.cacaPalavraId,
+            );
+            const palavrasArray = cacaPalavra?.palavras as string[] | undefined;
+            totalPerguntasCalculado =
+              (Array.isArray(palavrasArray) ? palavrasArray.length : 0) || 10;
+          } else {
+            totalPerguntasCalculado = 10;
+          }
         }
 
         if (acertos === undefined || acertos === null) {
@@ -34,7 +56,7 @@ export default factories.createCoreController(
           );
         }
 
-        if (acertos > totalPerguntas) {
+        if (acertos > totalPerguntasCalculado) {
           return ctx.badRequest(
             "Número de acertos não pode ser maior que o total de perguntas",
           );
@@ -43,8 +65,16 @@ export default factories.createCoreController(
         const pontuacaoAjustada = pontuacaoService.calcularPontuacao(
           jogo,
           acertos,
-          totalPerguntas,
+          totalPerguntasCalculado,
         );
+
+        console.log("DEBUG - Cálculo pontuação:", {
+          jogo,
+          acertos,
+          totalPerguntasCalculado,
+          pontuacaoAjustada,
+          esperado: (acertos / totalPerguntasCalculado) * 100,
+        });
 
         const dataToSave = {
           jogo: jogo,
@@ -98,7 +128,23 @@ export default factories.createCoreController(
           }
 
           const jogoUtilizado = jogo || pontuacaoAtual.jogo;
-          const totalUtilizado = totalPerguntas || 10;
+          let totalUtilizado = totalPerguntas;
+
+          if (!totalUtilizado) {
+            if (jogoUtilizado === "cacapalavras" && data.cacaPalavraId) {
+              const cacaPalavra = await strapi.entityService.findOne(
+                "api::caca-palavra.caca-palavra",
+                data.cacaPalavraId,
+              );
+              const palavrasArray = cacaPalavra?.palavras as
+                | string[]
+                | undefined;
+              totalUtilizado =
+                (Array.isArray(palavrasArray) ? palavrasArray.length : 0) || 10;
+            } else {
+              totalUtilizado = 10;
+            }
+          }
 
           if (acertos > totalUtilizado) {
             return ctx.badRequest(
